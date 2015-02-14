@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+    </head>
+    <style>
+        .axis path,
+        .axis line{
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 5px;
+        }
+        rect {
+            -moz-transition: all 0.3s;
+            -webkit-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        rect:hover{
+            fill: orange;
+        }
+    </style>
+    <body>
+        <button id="sort">Sort</button>
+        <button id="reset">Reset</button>
+        <script type="text/javascript">
+            var dataset = [{"sf":0.0099,"num":1,"type":1,"_row":"AGRN"},{"sf":0.0128,"num":2,"type":1,"_row":"CNTN1"},{"sf":0.0134,"num":3,"type":1,"_row":"CNTN2"},{"sf":0.0106,"num":4,"type":1,"_row":"CNTN3"},{"sf":0.0148,"num":5,"type":1,"_row":"CNTN4"},{"sf":0.0115,"num":6,"type":1,"_row":"CNTN5"},{"sf":0.0114,"num":7,"type":1,"_row":"CNTN6"},{"sf":0.0131,"num":8,"type":1,"_row":"CNTNAP1"},{"sf":0.0122,"num":9,"type":1,"_row":"CNTNAP2"},{"sf":0.0099,"num":10,"type":1,"_row":"CNTNAP3"},{"sf":0.0103,"num":11,"type":1,"_row":"CNTNAP3B"},{"sf":0.0146,"num":12,"type":1,"_row":"CNTNAP4"},{"sf":0.0134,"num":13,"type":1,"_row":"CNTNAP5"},{"sf":0.0122,"num":14,"type":1,"_row":"NLGN1"},{"sf":0.0104,"num":15,"type":1,"_row":"NLGN2"},{"sf":0.0128,"num":16,"type":1,"_row":"NRG1"},{"sf":0.0121,"num":17,"type":1,"_row":"NRG2"},{"sf":0.0144,"num":18,"type":1,"_row":"NRG3"},{"sf":0.0116,"num":19,"type":1,"_row":"NRXN1"},{"sf":0.0131,"num":20,"type":1,"_row":"NRXN2"},{"sf":0.0123,"num":21,"type":1,"_row":"NRXN3"},{"sf":0.0105,"num":22,"type":1,"_row":"DRD1"},{"sf":0.019,"num":23,"type":1,"_row":"DRD2"},{"sf":0.0214,"num":24,"type":1,"_row":"DRD3"},{"sf":0.0258,"num":25,"type":1,"_row":"DRD4"},{"sf":0.0099,"num":26,"type":1,"_row":"DRD5"},{"sf":0.0173,"num":27,"type":1,"_row":"SLC6A3"},{"sf":0.0108,"num":28,"type":1,"_row":"HTR1A"},{"sf":0.0182,"num":29,"type":1,"_row":"HTR1B"},{"sf":0.0109,"num":30,"type":1,"_row":"HTR1D"},{"sf":0.0119,"num":31,"type":1,"_row":"HTR1E"},{"sf":0.0118,"num":32,"type":1,"_row":"HTR1F"},{"sf":0.0108,"num":33,"type":1,"_row":"HTR2A"},{"sf":0.0108,"num":34,"type":1,"_row":"HTR2B"},{"sf":0.011,"num":35,"type":1,"_row":"HTR3A"},{"sf":0.0093,"num":36,"type":1,"_row":"HTR3B"},{"sf":0.0096,"num":37,"type":1,"_row":"HTR3C"},{"sf":0.0101,"num":38,"type":1,"_row":"HTR3D"},{"sf":0.0099,"num":39,"type":1,"_row":"HTR3E"},{"sf":0.01,"num":40,"type":1,"_row":"HTR4"},{"sf":0.0103,"num":41,"type":1,"_row":"HTR5A"},{"sf":0.0098,"num":42,"type":1,"_row":"HTR6"},{"sf":0.011,"num":43,"type":1,"_row":"HTR7"},{"sf":0.0202,"num":44,"type":1,"_row":"SLC6A4"},{"sf":0.0104,"num":45,"type":2,"_row":"AGRN_blood"},{"sf":0.0094,"num":46,"type":2,"_row":"CNTN1_blood"},{"sf":0.0095,"num":47,"type":2,"_row":"CNTN2_blood"},{"sf":0.0101,"num":48,"type":2,"_row":"CNTN3_blood"},{"sf":0.0094,"num":49,"type":2,"_row":"CNTN4_blood"},{"sf":0.0097,"num":50,"type":2,"_row":"CNTN5_blood"},{"sf":0.0108,"num":51,"type":2,"_row":"CNTN6_blood"},{"sf":0.0088,"num":52,"type":2,"_row":"CNTNAP1_blood"},{"sf":0.0099,"num":53,"type":2,"_row":"CNTNAP2_blood"},{"sf":0.0101,"num":54,"type":2,"_row":"CNTNAP3_blood"},{"sf":0.0106,"num":55,"type":2,"_row":"CNTNAP3B_blood"},{"sf":0.0099,"num":56,"type":2,"_row":"CNTNAP4_blood"},{"sf":0.0092,"num":57,"type":2,"_row":"CNTNAP5_blood"},{"sf":0.0091,"num":58,"type":2,"_row":"NLGN1_blood"},{"sf":0.0097,"num":59,"type":2,"_row":"NLGN2_blood"},{"sf":0.0095,"num":60,"type":2,"_row":"NRG1_blood"},{"sf":0.0109,"num":61,"type":2,"_row":"NRG2_blood"},{"sf":0.0088,"num":62,"type":2,"_row":"NRG3_blood"},{"sf":0.0096,"num":63,"type":2,"_row":"NRXN1_blood"},{"sf":0.01,"num":64,"type":2,"_row":"NRXN2_blood"},{"sf":0.0116,"num":65,"type":2,"_row":"NRXN3_blood"},{"sf":0.0108,"num":66,"type":2,"_row":"DRD1_blood"},{"sf":0.0107,"num":67,"type":2,"_row":"DRD2_blood"},{"sf":0.0098,"num":68,"type":2,"_row":"DRD3_blood"},{"sf":0.0107,"num":69,"type":2,"_row":"DRD4_blood"},{"sf":0.0105,"num":70,"type":2,"_row":"DRD5_blood"},{"sf":0.0112,"num":71,"type":2,"_row":"SLC6A3_blood"},{"sf":0.01,"num":72,"type":2,"_row":"HTR1A_blood"},{"sf":0.0115,"num":73,"type":2,"_row":"HTR1B_blood"},{"sf":0.0096,"num":74,"type":2,"_row":"HTR1D_blood"},{"sf":0.0096,"num":75,"type":2,"_row":"HTR1E_blood"},{"sf":0.0097,"num":76,"type":2,"_row":"HTR1F_blood"},{"sf":0.011,"num":77,"type":2,"_row":"HTR2A_blood"},{"sf":0.0125,"num":78,"type":2,"_row":"HTR2B_blood"},{"sf":0.0095,"num":79,"type":2,"_row":"HTR3A_blood"},{"sf":0.0084,"num":80,"type":2,"_row":"HTR3B_blood"},{"sf":0.0091,"num":81,"type":2,"_row":"HTR3C_blood"},{"sf":0.0091,"num":82,"type":2,"_row":"HTR3D_blood"},{"sf":0.0089,"num":83,"type":2,"_row":"HTR3E_blood"},{"sf":0.0092,"num":84,"type":2,"_row":"HTR4_blood"},{"sf":0.0092,"num":85,"type":2,"_row":"HTR5A_blood"},{"sf":0.0133,"num":86,"type":2,"_row":"HTR6_blood"},{"sf":0.0101,"num":87,"type":2,"_row":"HTR7_blood"},{"sf":0.0117,"num":88,"type":2,"_row":"SLC6A4_blood"}];
+
+        var width = 1000;
+        var height = 3000;
+        var canvas = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+        
+        var xScale = d3.scale.linear()
+                        .domain([0, d3.max(dataset, function(d){
+                            return d.sf;
+                        })])
+                        .range([0, 300]);
+
+        var yScale = d3.scale.ordinal()
+                        .domain(d3.range(dataset.length))
+                        .rangeRoundBands([0, height], 0.05);
+
+        canvas.selectAll("rect")
+           .data(dataset)
+           .enter()
+           .append("rect")
+           .attr("x", function(d){
+                return width - xScale(d.sf);
+           })
+           .attr("y", function(d, i){
+                return yScale(i);
+           })
+           .attr("width", function(d){
+                return xScale(d.sf);
+            })
+           .attr("height", yScale.rangeBand())
+           .attr("fill", function(d){
+                if (d.type == 1){
+                    return "#a6bddb";
+                }
+                else{
+                    return "#2b8cbe";
+                }
+           })
+
+           //Tooltip
+           .on("mouseover", function(d){
+                //get this bar's x&y values
+                var xPosition = parseFloat(d3.select(this).attr("x")) + 5;
+                var yPosition = parseFloat(d3.select(this).attr("y")) + yScale.rangeBand() / 2 + 5;
+                //update tooltip position
+                d3.select("#tooltip")
+                    .style("left", xPosition + "px")
+                    .style("top", yPosition + "px")
+                    .select("#value")
+                    .text(d._row);
+                d3.select("#tooltip").classed("hidden", true)
+           })
+           .on("mouseout", function(){
+            //remove tooltip
+            d3.select("#tooltip").classed("hidden", false);
+           });
+
+        canvas.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .attr("x", function(d){
+                return width - xScale(d.sf) + 5;
+            })
+            .attr("y", function(d, i){
+                return yScale(i) + yScale.rangeBand() / 2 + 5;
+            })
+            .text(function(d){
+                return d._row;
+            })
+            .attr("fill", "white")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "10px");
+
+        var sortOrder = false;
+        var sortBars = function(){
+            sortOrder = !sortOrder;
+
+            sortItems = function(a, b){
+                if (sortOrder){
+                    return b.sf - a.sf;
+                }
+                else{
+                    return a.sf - b.sf;
+                }
+            };
+
+            canvas.selectAll("rect")
+                .sort(sortItems)
+                .transition()
+                .delay(function(d, i){
+                    return i * 50
+                })
+                .duration(500)
+                .attr("y", function(d, i){
+                    return yScale(i);
+                });
+            canvas.selectAll('text')
+                .sort(sortItems)
+                .transition()
+                .delay(function(d, i){
+                    return i * 50;
+                })
+                .duration(500)
+                .text(function(d){
+                    return d._row;
+                })
+                .attr("x", function(d){
+                    return width - xScale(d.sf) + 5;
+                })
+                .attr("y", function(d, i){
+                    return yScale(i) + yScale.rangeBand() / 2 + 5;
+                });
+        };
+        d3.select("#sort").on("click", sortBars);
+        d3.select("#reset").on("click", reset);
+        
+        function reset(){
+            canvas.selectAll("rect")
+                .sort(function(a, b){
+                    return a.num - b.num;
+                })
+                .transition()
+                .delay(function(d, i){
+                    return i * 50;
+                })
+                .duration(500)
+                .attr("y", function(d, i){
+                    return yScale(i);
+                })
+            canvas.selectAll('text')
+                .sort(function(a, b){
+                    return a.num - b.num;
+                })
+                .transition()
+                .delay(function(d, i){
+                    return i * 50;
+                })
+                .duration(500)
+                .text(function(d){
+                    return d._row;
+                })
+                .attr("x", function(d){
+                    return width - xScale(d.sf) + 5;
+                })
+                .attr("y", function(d, i){
+                    return yScale(i) + yScale.rangeBand() / 2 + 5;
+                });
+
+        };
+        </script>                                                    
+    </body>
+</html>
+
